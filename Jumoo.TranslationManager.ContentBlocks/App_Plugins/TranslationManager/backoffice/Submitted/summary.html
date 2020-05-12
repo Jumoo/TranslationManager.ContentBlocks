@@ -1,0 +1,36 @@
+﻿<div ng-controller="translateSummarySubmittedController as vm"> 
+    <umb-editor-view footer="false">
+        <umb-editor-header name="'Submitted Jobs'"
+                           name-locked="true"
+                           hide-icon="true"
+                           hide-alias="true"
+                           description="'Translation jobs that have been submitted for translation'"
+                           description-locked="true">
+        </umb-editor-header>
+        <umb-editor-container>
+            <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+            <div ng-if="!vm.loading">
+                <div class="tm-lang-boxes">
+                    <div class="tm-lang-box" ng-repeat="item in vm.info"
+                         ng-click="vm.viewJobs(item.Name)">
+                        <umb-box>
+                            <umb-box-header title="{{item.DisplayName}}"
+                                            description="{{item.Name}}"></umb-box-header>
+                            <umb-box-content>
+                                {{item.Count}} Jobs items
+                            </umb-box-content>
+                        </umb-box>
+                    </div>
+                </div>
+                <umb-empty-state position="center" ng-if="vm.info.length == 0">
+                    <h5>No Jobs</h5>
+                    <p>
+                        There are no submitted Jobs
+                    </p>
+                </umb-empty-state>
+
+            </div>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>

@@ -1,0 +1,32 @@
+﻿<div>
+    <umb-load-indicator ng-if="model.loading"></umb-load-indicator>
+
+    <umb-box ng-if="!model.loading">
+        <umb-box-header title="Notifications"
+                        description="Define who will get an email when key events occur (';' seperated lists)">
+        </umb-box-header>
+        <umb-box-content>
+            <umb-control-group label="Pending Notifications"
+                               description="Email addresses to notify">
+                <input type="text" class="umb-textstring umb-property-editor"
+                       ng-model="model.settings.Notify.Pending" />
+            </umb-control-group>
+            <umb-control-group label="Submitted Notifications"
+                               description="Email addresses to notify">
+                <input type="text" class="umb-textstring umb-property-editor"
+                       ng-model="model.settings.Notify.Submitted" />
+            </umb-control-group>
+            <umb-control-group label="Received Notifications"
+                               description="Email addresses to notify">
+                <input type="text" class="umb-textstring umb-property-editor"
+                       ng-model="model.settings.Notify.Received" />
+            </umb-control-group>
+            <umb-control-group label="Approved Notifications"
+                               description="Email addresses to notify">
+                <input type="text" class="umb-textstring umb-property-editor"
+                       ng-model="model.settings.Notify.Approved" />
+            </umb-control-group>
+
+        </umb-box-content>
+    </umb-box>
+</div>

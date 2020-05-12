@@ -1,0 +1,38 @@
+﻿<div ng-controller="translate.setEditController as vm">
+    <form name="setCreate" class="form-horizontal" novalidate val-form-manager>
+        <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+        <div ng-if="!vm.loading">
+            <umb-editor-view>
+                <umb-editor-header name="vm.set.Name"
+                                   name-locked="false"
+                                   hide-icon="true"
+                                   hide-alias="true"
+                                   hide-description="true"
+                                   navigation="vm.page.navigation">
+                </umb-editor-header>
+                <umb-editor-container>
+                    <umb-editor-sub-views sub-views="vm.page.navigation" model="vm"></umb-editor-sub-views>
+                </umb-editor-container>
+                <umb-editor-footer>
+                    <umb-editor-footer-content-right>
+                        <umb-button type="button"
+                                    button-style="link"
+                                    label-key="general_close"
+                                    state="vm.buttonState"
+                                    action="vm.close()"
+                                    ng-if="model.close">
+                        </umb-button>
+
+                        <umb-button type="button"
+                                    button-style="action"
+                                    label-key="buttons_save"
+                                    state="vm.buttonState"
+                                    action="vm.save(vm.site)"
+                                    disabled="!vm.isValid">
+                        </umb-button>
+                    </umb-editor-footer-content-right>
+                </umb-editor-footer>
+            </umb-editor-view>
+        </div>
+    </form>
+</div>

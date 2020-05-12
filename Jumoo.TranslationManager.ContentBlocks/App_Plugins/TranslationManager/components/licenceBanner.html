@@ -1,0 +1,11 @@
+﻿<div class="translate-licence-banner" ng-if="!vm.loading">
+    <div ng-if="vm.valid != 'valid'" class="alert alert-info flex translate-licence-alert">
+        <i class="icon icon-alert-alt" style="padding-right: 10px; font-size: 24px;"></i>
+        <div ng-if="vm.valid == 'no-local'">
+            <localize key="translate_licenceLocalWarning" />
+        </div>
+        <div ng-if="vm.valid != 'no-local'">
+            <localize key="translate_licenceWarning" />
+        </div>
+    </div>
+</div>

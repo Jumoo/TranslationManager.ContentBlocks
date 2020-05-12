@@ -1,0 +1,32 @@
+﻿<div ng-controller="translateJobsSubmittedController as vm">
+    <umb-editor-view>
+        <umb-editor-header name="vm.page.title"
+                           description="vm.page.description"
+                           name-locked="true"
+                           hide-icon="true"
+                           hide-alias="true"
+                           description-locked="true">
+        </umb-editor-header>
+        <umb-editor-container>
+
+            <div ng-if="vm.loaded">
+                <translate-job-list-view selectable="false"
+                                         status-range="vm.statusRange"
+                                         culture="vm.cultureId">
+                </translate-job-list-view>
+            </div>
+
+        </umb-editor-container>
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button action="vm.checkJobs()"
+                            type="button"
+                            button-style="info"
+                            state="vm.checkButtonState"
+                            label-key="translate_check"
+                            disabled="vm.checkButtonState == 'busy'">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+    </umb-editor-view>
+</div>

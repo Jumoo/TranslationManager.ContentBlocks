@@ -1,0 +1,91 @@
+﻿<div>
+    <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+    <div ng-if="!vm.loading">
+        <umb-empty-state ng-if="vm.versions.length == 0">
+            <h5>No Items</h5>
+            <p>
+                There are currently no translations for this page
+            </p>
+        </umb-empty-state>
+
+        <div ng-if="vm.versions.length > 0">
+
+
+            <div class="umb-table translate-table">
+                <div class="umb-table-head">
+                    <div class="umb-table-row">
+                        <div class="umb-table-cell"></div>
+                        <div class="umb-table-cell">Language</div>
+                        <div class="umb-table-cell">Latest</div>
+                        <div class="umb-table-cell tm-item-status-date">Date</div>
+                        <div class="umb-table-cell">Translation Status</div>
+                        <div class="umb-table-cell tm-table-cell-actions"></div>
+                    </div>
+                </div>
+                <div class="umb-table-body">
+                    <div ng-repeat="version in vm.versions"
+                         class="umb-table-row">
+                        <div class="umb-table-cell">
+                            <i class="translate-table-icon icon-globe"></i>
+                        </div>
+                        <div class="umb-table-cell">{{version.LanguageName}}</div>
+                        <div class="umb-table-cell">
+                            <div ng-if="version.ContentId != vm.node.id">
+                                <div ng-if="version.IsCurrent">
+                                    <i class="icon-check color-green"></i> Latest version
+                                </div>
+                                <div ng-if="!version.IsCurrent && version.Id !== -1">
+                                    <i class="icon-time color-orange"></i> {{version.versionPos}} versions out of date
+                                </div>
+                                <div ng-if="version.Id == -1">
+                                    <i class="icon-wrong color-red"></i>No translated version
+                                </div>
+                            </div>
+                            <div ng-if="version.ContentId == vm.node.id">
+                                N/A
+                            </div>
+                        </div>
+                        <div class="umb-table-cell tm-item-status-date">
+                            <div ng-if="version.Id != -1">
+                                {{version.Updated | date : 'medium'}}
+                            </div>
+                        </div>
+                        <div class="umb-table-cell">
+                            <div ng-if="version.Id != -1">
+                                {{version.Status}}
+                            </div>
+                        </div>
+                        <div class="umb-table-cell tm-table-cell-actions">
+                            <div ng-if="version.JobId > 0">
+                                <button class="btn btn-default btn-small"
+                                        ng-click="vm.viewJob(version.JobId, $event)">
+                                    View Job
+                                </button>
+                            </div>
+                            <div ng-if="version.JobId == 0 && version.Id !== -1">
+                                <button class="btn btn-default btn-small"
+                                        ng-click="vm.viewItem(version.itemId, $event)">
+                                    View Item
+                                </button>
+                            </div>
+                            <div>
+                                <button class="btn btn-action btn-small"
+                                        ng-click="vm.createTranslation(version, $event)">
+                                    Create
+                                </button>
+                            </div>
+                            <div ng-if="vm.node.variants.length > 1 &&  version.JobId == 0 && version.Id === -1">
+                                <button class="btn btn-default btn-small"
+                                        ng-click="vm.cloneTranslation(version.CultureName, $event)">
+                                    Clone
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

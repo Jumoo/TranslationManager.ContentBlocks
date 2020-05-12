@@ -1,0 +1,50 @@
+﻿<div ng-controller="translateListPendingController as vm">
+    <umb-editor-view>
+        <umb-editor-header name="vm.page.title"
+                           description="vm.page.description"
+                           name-locked="true"
+                           hide-icon="true"
+                           hide-alias="true"
+                           description-locked="true">
+        </umb-editor-header>
+        <umb-editor-container>
+            <umb-box>
+                <translate-item-list-view culture="vm.cultureName"
+                                          status="vm.status"
+                                          selectable="true"
+                                          allow-remove="true"
+                                          allow-remove-all="true"
+                                          selected-items="vm.createOptions.items"
+                                          show-sets="true">
+                </translate-item-list-view>
+
+            </umb-box>
+
+        </umb-editor-container>
+        <umb-editor-footer>
+            <umb-editor-footer-content-left>
+                <button ng-click="vm.refresh()" class="btn btn-default">
+                    <i class="icon icon-refresh"></i>
+                    <localize key="actions_refreshNode">Refresh</localize>
+                </button>
+            </umb-editor-footer-content-left>
+
+            <div class="translate-item-count">
+                {{vm.createOptions.items.length}} items selected
+            </div>
+
+            <umb-editor-footer-content-right>
+                <div ng-if="vm.createOptions.items.length > 0">
+
+                    <umb-button action="vm.create()"
+                                type="button"
+                                button-style="success"
+                                state="vm.buttonState"
+                                label="Create Job"></umb-button>
+                </div>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+
+    </umb-editor-view>
+
+</div>

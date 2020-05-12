@@ -1,0 +1,28 @@
+﻿<div ng-controller="translateSitePicker.Controller as vm">
+    <div ng-if="!vm.loaded">
+        Loading
+        <div class="progress progress-striped active" style="max-width: 66.6%;">
+            <div class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+    <div ng-if="vm.loaded">
+        <div ng-repeat="node in vm.nodes"
+             class="umb-node-preview">
+            <i ng-if="node.icon" class="umb-node-preview__icon {{node.icon}}"></i>
+            <div class="umb-node-preview__content">
+                <div class="umb-node-preview__name">{{node.name}}</div>
+                <div class="umb-node-preview__description">{{vm.getTargetLanguage(node, $index)}}</div>
+            </div>
+            <div class="umb-node-preview__actions">
+                <a class="umb-node-preview__action umb-node-preview__action--red"
+                   ng-click="vm.remove(node)" href prevent-default>
+                    <localize key="general_remove">Remove</localize>
+                </a>
+            </div>
+        </div>
+        <a class="umb-node-preview-add" ng-click="vm.open()" href prevent-default
+           ng-if="vm.nodes.length == 0 || vm.multi">
+            <localize key="general_add">Add</localize>
+        </a>
+    </div>
+</div>

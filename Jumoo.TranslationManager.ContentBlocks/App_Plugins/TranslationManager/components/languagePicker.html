@@ -1,0 +1,58 @@
+﻿<div class="translate-language-picker">
+
+    <div ng-if="!vm.showDropdown">
+        <div ng-repeat="set in vm.sets">
+            <h5 ng-if="vm.sets.length > 1">{{set.Name}}</h5>
+            <div class="language-toggles">
+                <div ng-repeat="site in set.Sites" class="translate-language-box">
+
+                    <div class="flex">
+                        <umb-checkbox input-id="pick_{{site.Id}}_{{site.Culture.DisplayName}}"
+                                      name="pick_{{site.Id}}_{{site.Culture.DisplayName}}"
+                                      model="site.checked"
+                                      on-change="vm.toggle(site)"
+                                      >
+                        </umb-checkbox>
+                        <div>
+                            <label for="pick_{{site.Id}}_{{site.Culture.DisplayName}}">
+                                {{site.Culture.DisplayName}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="vm.showDropdown">
+        <div class="input-append">
+            <select ng-model="vm.selectedSet">
+                <optgroup ng-repeat="set in vm.sets" label="{{set.Name}}">
+                    <option ng-repeat="site in set.Sites"
+                            value="{{set.Id}}_{{site.Id}}_{{site.Culture.Name}}">
+                        {{site.Culture.DisplayName}}
+                    </option>
+                    <option value="SET_{{set.Id}}" class="color-green">
+                        All Languages in set
+                    </option>
+                </optgroup>
+            </select>
+            <button class="btn btn-success" ng-click="vm.addLanguage()">Add</button>
+        </div>
+
+
+        <div>
+            <span ng-repeat="set in vm.sets">
+                <span ng-repeat="site in set.Sites">
+                    <span ng-if="site.checked" class="pending-item"
+                          title="{{set.Name}}">
+                        {{site.Culture.DisplayName}} <em ng-if="vm.sets.length > 1">({{set.Name}}</em>
+                        <a href ng-click="vm.removeLanguage($event, site)">
+                            <i class="icon icon-wrong color-red"></i>
+                        </a>
+                    </span>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>

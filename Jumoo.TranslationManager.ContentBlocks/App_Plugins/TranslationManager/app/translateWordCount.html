@@ -1,0 +1,34 @@
+﻿<div>
+    <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+    <div ng-if="!vm.loading">
+        <div class="tm-stat-table">
+            <div class="tm-stat-row">
+                <div>
+                    <localize key="translate_properties"></localize>
+                </div>
+                <div>
+                    {{vm.counts.Properties}}
+                </div>
+            </div>
+            <div class="tm-stat-row">
+                <localize key="translate_wordEstimate"></localize>
+                <div>
+                    {{vm.counts.Words}}
+                </div>
+            </div>
+            <div class="tm-stat-row">
+                <localize key="translate_charEstimate"></localize>
+                <div>
+                    {{vm.counts.Characters}}
+                </div>
+            </div>
+
+            <small>
+                <em>
+                    <localize key="translate_estimateDisclaim"></localize>
+                </em>
+            </small>
+        </div>
+
+    </div>
+</div>

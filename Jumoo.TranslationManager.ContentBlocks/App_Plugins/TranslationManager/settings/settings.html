@@ -1,0 +1,50 @@
+﻿<div>
+    <umb-load-indicator ng-if="model.loading"></umb-load-indicator>
+
+    <umb-box ng-if="!model.loading">
+        <umb-box-header title="Settings"
+                        description=" Global settings - used across all sets and languages">
+        </umb-box-header>
+        <umb-box-content>
+            <umb-control-group label="Translate on Save"
+                               description="create a pending translation when a user saves or publishes a node">
+                <umb-toggle checked="model.settings.AutoTranslate"
+                            on-click="model.settings.AutoTranslate = !model.settings.AutoTranslate">
+                </umb-toggle>
+            </umb-control-group>
+
+            <umb-control-group label="Background Check"
+                               description="Check status of submitted jobs in background">
+                <umb-toggle checked="model.settings.BackgroundCheck"
+                            on-click="model.settings.BackgroundCheck = !model.settings.BackgroundCheck">
+                </umb-toggle>
+            </umb-control-group>
+
+            <umb-control-group label="Check Period"
+                               description="How often (in seconds) to poll providers for job status (requires restart)">
+                <input type="number" ng-model="model.settings.CheckPeriod" class="umb-property-editor" />
+            </umb-control-group>
+
+            <umb-control-group label="Include Empty Nodes"
+                               description="Include nodes that have no translatable text in jobs">
+
+                <umb-toggle checked="model.settings.IncludeEmpty"
+                            on-click="model.settings.IncludeEmpty = !model.settings.IncludeEmpty">
+                </umb-toggle>
+            </umb-control-group>
+
+            <!--
+            <umb-control-group label="Show Item History"
+                               description="Include the Translation History option on a content items context menu">
+                <umb-toggle checked="model.settings.ShowHistory"
+                            on-click="model.settings.ShowHistory = !model.settings.ShowHistory">
+                </umb-toggle>
+            </umb-control-group>-->
+
+            <umb-control-group label="Batch Size"
+                               description="Number of items to process in a batch (to prevent timeout issues)">
+                <input type="number" ng-model="model.settings.BatchSize" class="umb-property-editor" />
+            </umb-control-group>
+        </umb-box-content>
+    </umb-box>
+</div>

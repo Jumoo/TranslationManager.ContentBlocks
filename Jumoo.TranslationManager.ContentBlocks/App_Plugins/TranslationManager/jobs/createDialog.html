@@ -1,0 +1,70 @@
+﻿<div ng-controller="translateCreateJobDialogController as vm"
+     class="translate-dialog">
+
+    <umb-editor-panel>
+        <umb-editor-header name="'Create Translation Job'"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true">
+        </umb-editor-header>
+        <umb-editor-container>
+            <div ng-if="vm.creating">
+                <div class="send-busy-msg">Creating</div>
+                <umb-load-indicator></umb-load-indicator>
+            </div>
+            <div ng-if="!vm.creating && !vm.done">
+                <umb-box>
+                    <umb-box-header title="Items">
+                        {{vm.options.items.length}} Items
+                    </umb-box-header>
+                    <umb-box-content>
+                        <ul class="translate-node-name-list">
+                            <li ng-repeat="item in vm.options.items | limitTo: 5">
+                                {{item.MasterNodeName}}
+                            </li>
+                            <li ng-if="vm.options.items.length > 5">
+                                more...
+                            </li>
+                        </ul>
+                    </umb-box-content>
+                </umb-box>
+
+                <translate-job-options job="vm.job"
+                                       provider-key="vm.options.set.ProviderKey"
+                                       provider="vm.job.provider">
+                </translate-job-options>
+            </div>
+
+            <div ng-if="vm.done">
+                <div class="send-busy-msg">
+                    <div>
+                        {{vm.completeMsg}} <br/>
+                        {{vm.result.Name}}
+                    </div>
+                    <button ng-click="vm.viewJob(vm.result)" class="btn btn-info">View Job</button>
+                </div>
+            </div>
+
+        </umb-editor-container>
+
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            action="vm.close()">
+                </umb-button>
+
+                <umb-button type="button"
+                            button-style="action"
+                            label-key="general_create"
+                            action="vm.create()"
+                            ng-if="!vm.done">
+                </umb-button>
+
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+    </umb-editor-panel>
+
+</div>

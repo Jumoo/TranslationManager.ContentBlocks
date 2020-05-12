@@ -1,0 +1,29 @@
+﻿<div ng-controller="translateSummaryPendingController as vm">
+    <umb-editor-view footer="false">
+        <umb-editor-header name="'Pending Items'"
+                           name-locked="true"
+                           hide-icon="true"
+                           hide-alias="true"
+                           description="'Changes that are waiting to be sent to translation'"
+                           description-locked="true">
+        </umb-editor-header>
+        <umb-editor-container>
+            <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+            <div ng-if="!vm.loading">
+                <div class="tm-lang-boxes">
+                    <div class="tm-lang-box" ng-repeat="item in vm.open"
+                         ng-click="vm.viewLanguage(item.Name)">
+                        <umb-box>
+                            <umb-box-header title="{{item.DisplayName}}" 
+                                            description="{{item.Name}}" />
+                            <umb-box-content>
+                                {{item.Count}} pending items
+                            </umb-box-content>
+                        </umb-box>
+                    </div>
+                </div>
+            </div>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>

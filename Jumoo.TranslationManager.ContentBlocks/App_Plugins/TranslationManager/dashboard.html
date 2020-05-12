@@ -1,0 +1,81 @@
+﻿<div ng-controller="translateDashboardController as vm">
+    <umb-box>
+        <umb-box-header title="Translation Overview"
+                        description="Current status of your translations">
+            <umb-button action="vm.toggleSummary()" type="button" button-style="link" label="{{vm.summaryText}}"></umb-button>
+            <a href="#/settings/tmSettings/settings" ng-if="vm.hasSettings" class="btn btn-link">View settings</a>
+        </umb-box-header>
+
+    </umb-box>
+
+    <div ng-if="vm.showSummary == true">
+        <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+        <div ng-if="!vm.loading">
+            <umb-box ng-if="vm.setup === false">
+                <umb-box-header title="No translation sets"
+                                description="You have yet to setup any translation sets"></umb-box-header>
+                <umb-box-content>
+                    <p>
+                        Translations are managed via Translation Sets. these define where the source and target language content is within Umbraco, and settings such as what properties are translated.
+                    </p>
+                    <p>
+                        To translate anycontent via Translation Manager you will need to create a translation set
+                    </p>
+                    <button ng-click="vm.createSet()" class="btn btn-warning">Create your first set</button>
+                </umb-box-content>
+            </umb-box>
+            <div ng-if="vm.setup === true">
+                <translate-licence-banner></translate-licence-banner>
+
+                <div class="tm-info-boxes">
+
+                    <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewSets()">
+                        <umb-box-content>
+                            <div class="tm-info-count">
+                                {{vm.sets.length}}
+                            </div>
+                            Translation set<span ng-if="vm.sets.length != 1">s</span>
+                        </umb-box-content>
+                    </umb-box>
+                    <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewPending()">
+                        <umb-box-content>
+                            <div class="tm-info-count">
+                                {{vm.counts.pending}}
+                            </div>
+                            Pending Item<span ng-if="vm.counts.pending != 1">s</span>
+                        </umb-box-content>
+                    </umb-box>
+                    <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewSubmitted()">
+                        <umb-box-content>
+                            <div class="tm-info-count">
+                                {{vm.counts.submitted}}
+                            </div>
+                            Submitted Job<span ng-if="vm.counts.submitted != 1">s</span>
+                        </umb-box-content>
+                    </umb-box>
+                    <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewReceived()">
+                        <umb-box-content>
+                            <div class="tm-info-count">
+                                {{vm.counts.received}}
+                            </div>
+                            Received Job<span ng-if="vm.counts.received != 1">s</span>
+                        </umb-box-content>
+                    </umb-box>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="vm.showSummary == false">
+        <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+        <umb-box ng-if="!vm.loading">
+            <umb-box-header title="My Jobs" description="Jobs you created"></umb-box-header>
+            <umb-box-content>
+                <translate-job-list-view selectable="false"
+                                         status-range="vm.submittedRange"
+                                         user-view="true"
+                                         hide-user-toggle="true">
+                </translate-job-list-view>
+            </umb-box-content>
+        </umb-box>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+﻿<div ng-controller="translateSitepickerDialog.Controller as vm">
+    <umb-editor-panel>
+        <umb-editor-header name="'Select site'"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true">
+        </umb-editor-header>
+
+        <umb-editor-container>
+            <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
+
+
+            <umb-tree section="content"
+                      hideheader="true"
+                      hideoptions="true"
+                      isdialog="true"
+                      api="vm.dialogTreeApi"
+                      on-init="vm.onTreeInit()"                      
+                      enablecheckboxes="true">
+            </umb-tree>
+
+            <umb-box class="tm-picker-control-box" ng-if="vm.site.Id > 0">
+                <umb-box-content>
+                    <umb-control-group label="Target Language"
+                                       description="languages assigned to this node">
+                        <ul class="unstyled" ng-if="vm.cultures.length > 0">
+                            <li ng-repeat="culture in vm.cultures">
+                                <umb-toggle checked="vm.site.CultureName == culture.Name"
+                                            on-click="vm.site.CultureName = culture.Name"
+                                            show-labels="true"
+                                            label-on="{{culture.DisplayName}}"
+                                            label-off="{{culture.DisplayName}}"
+                                            label-position="right">
+                                </umb-toggle> 
+                            
+                            </li>
+                        </ul>
+                        <label class="control-label">
+                            <span ng-if="vm.cultures.length > 0">Or pick another language</span>
+                            <small>pick any language installed in Umbraco</small>
+                        </label>
+                        <select ng-model="vm.site.CultureName">
+                            <option ng-repeat="lang in vm.languages"
+                                    value="{{lang.Name}}">
+                                {{lang.DisplayName}}
+                            </option>
+                        </select>
+                    </umb-control-group>
+                </umb-box-content>
+            </umb-box>
+
+        </umb-editor-container>
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            action="vm.close()">
+                </umb-button>
+
+                <umb-button type="button"
+                            button-style="action"
+                            label-key="general_submit"
+                            disabled="!vm.isValid()"
+                            action="vm.submit(vm.site)">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+    </umb-editor-panel>
+</div>

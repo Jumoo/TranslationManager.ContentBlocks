@@ -1,0 +1,68 @@
+﻿<div class="flex">
+    <div ng-if="!vm.hasChildren(vm.value)" class="flx-g1">
+        <h4>{{vm.value.DisplayName}}</h4>
+        <div class="flex">
+            <div class="translate-value-box"
+                 ng-class="{'source' : !vm.isTarget, 'pending' : !target.translated, 'complete' : target.translated}">
+                <div ng-if="vm.value.Value || vm.value.Value.length > 0">
+                    <div ng-if="vm.edit">
+                        <span class="translate-value-edit-controls">
+                            <i class="icon icon-check color-green"
+                               ng-click="vm.saveProperty()"></i>
+                            <i class="icon icon-wrong color-red"
+                               ng-click="vm.toggleEdit()"></i>
+                        </span>
+                        <textarea ng-model="vm.value.Value"
+                                  style="width:100%; height: 150px; margin-top: 0.5em;"></textarea>
+                    </div>
+                    <div ng-if="!vm.edit">
+                        <span class="translate-value-edit-controls">
+                            <i class="icon icon-edit"
+                               ng-if="vm.editable"
+                               ng-click="vm.toggleEdit()"></i>
+                        </span>
+                        <div ng-if="vm.value.HtmlControl" ng-bind-html="vm.value.Value"></div>
+                        <div ng-if="!vm.value.HtmlControl">{{vm.value.Value}}</div>
+                    </div>
+                </div>
+                <div ng-if="!vm.value.Value || vm.value.Valuelength == 0">
+                    (Blank)
+                </div>
+                <div class="translate-value-data">
+                    <i class="icon icon-code pull-left" ng-show="value.HtmlControl" title="html"></i>
+                    <i class="icon icon-autofill pull-left" ng-show="!value.HtmlControl" title="text"></i>
+
+                    {{vm.valud.Id}} {{vm.value.AdditionalSettings}}
+
+                    <i class="icon icon-check color-green" title="translated"
+                       ng-if="vm.Translated"></i>
+
+                    <i class="icon icon-axis-rotation color-orange"
+                       title="waiting for translation"
+                       ng-if="!target.Translated && vm.editable"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="vm.hasChildren(vm.value)"  class="flx-g1">
+        <div ng-repeat="child in vm.value.InnerValues">
+            <translate-value-view value="child"
+                                  editable="vm.editable"
+                                  is-target="vm.isTarget"
+                                  parent-property="vm.parentProperty"
+                                  on-save="vm.onSave()"
+                                  on-remove="vm.onRemove()"
+                                  is-top="false">
+            </translate-value-view>
+        </div>
+    </div>
+
+    <div ng-if="vm.isTop && vm.editable">
+        <button ng-click="vm.removeProperty()"
+                class="btn btn-danger btn-small translate-value-button">
+            remove
+        </button>
+    </div>
+
+</div>
