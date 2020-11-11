@@ -48,7 +48,7 @@
             editorService.open({
                 createOptions: vm.createOptions,
                 title: 'Create Job',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'jobs/createDialog.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'jobs/createDialog.html',
                 size: 'small',
                 submit: function () {
                     refresh();

@@ -28,16 +28,18 @@
                 },
                 languages: options.languages,
                 title: 'Create Translations for',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'app/createDialog.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'app/createDialog.html',
                 size: 'small',
                 submit: function (done) {
                     editorService.close();
+                    navigationService.hideNavigation();
                     if (cb !== undefined) {
                         cb(true);
                     }
                 },
                 close: function () {
                     editorService.close();
+                    navigationService.hideNavigation();
                     if (cb !== undefined) {
                         cb(false);
                     }
@@ -60,7 +62,7 @@
                 },
                 languages: options.languages,
                 title: 'Create dictionary translations',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'app/dictionaryDialog.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'app/dictionaryDialog.html',
                 size: 'small',
                 submit: function (done) {
                     editorService.close();
@@ -82,7 +84,7 @@
             editorService.open({
                 nodeId: item.Id,
                 title: 'Item View',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'backoffice/items/view.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'backoffice/items/view.html',
                 submit: function (done) {
                     editorService.close();
                     if (cb !== undefined) {
@@ -102,7 +104,7 @@
             editorService.open({
                 jobId: jobId,
                 title: 'Job View',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'backoffice/jobs/edit.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'backoffice/jobs/edit.html',
                 submit: function () {
                     editorService.close();
                     if (cb !== undefined) {
@@ -122,7 +124,7 @@
             editorService.open({
                 setId: setId,
                 title: 'Set View',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'backoffice/tmSettings/setEdit.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'backoffice/tmSettings/setEdit.html',
                 submit: function () {
                     editorService.close();
                     if (cb !== undefined) {

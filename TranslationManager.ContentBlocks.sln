@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jumoo.TranslationManager.ContentBlocks", "Jumoo.TranslationManager.ContentBlocks\Jumoo.TranslationManager.ContentBlocks.csproj", "{45168291-57B6-4E48-A2B7-18D6F28AE171}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentBlocksTest.Site", "ContentBlocksTest.Site\ContentBlocksTest.Site.csproj", "{7E8C0AA8-F25F-4368-8790-8268FC3A86D6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{45168291-57B6-4E48-A2B7-18D6F28AE171}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45168291-57B6-4E48-A2B7-18D6F28AE171}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45168291-57B6-4E48-A2B7-18D6F28AE171}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7E8C0AA8-F25F-4368-8790-8268FC3A86D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E8C0AA8-F25F-4368-8790-8268FC3A86D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E8C0AA8-F25F-4368-8790-8268FC3A86D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E8C0AA8-F25F-4368-8790-8268FC3A86D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

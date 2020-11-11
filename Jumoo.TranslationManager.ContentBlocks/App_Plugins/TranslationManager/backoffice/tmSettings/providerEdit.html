@@ -26,7 +26,8 @@
                                 button-style="action"
                                 label-key="buttons_save"
                                 state="vm.buttonState"
-                                action="vm.save()">
+                                action="vm.save()"
+                                disabled="!vm.isValid">
                     </umb-button>
                 </umb-editor-footer-content-right>
             </umb-editor-footer>

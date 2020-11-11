@@ -13,7 +13,7 @@
 
     function nodeService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.NodeService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.nodeService;
 
         var service = {
             getNode : getNode,
@@ -137,7 +137,7 @@
         }
 
         function getPaths(nodes) {
-            return $http.post(serviceRoot + "NodePaths/", nodes);
+            return $http.post(serviceRoot + "NodePaths", nodes);
         }
 
         /////// word count 

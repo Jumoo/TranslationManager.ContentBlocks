@@ -23,6 +23,14 @@
                         </umb-box>
                     </div>
                 </div>
+
+                <translate-job-list-view selectable="false"
+                                         status-range="vm.statusRange"
+                                         hide-user-toggle="true"
+                                         hide-no-job-message="true">
+                </translate-job-list-view>
+
+
                 <umb-empty-state position="center" ng-if="vm.info.length == 0">
                     <h5>No Jobs</h5>
                     <p>

@@ -9,6 +9,7 @@
             culture: '<',
             userView: '<',
             hideUserToggle: '<',
+            hideNoJobMessage: '<',
             onRefresh: '&'
         },
         controllerAs: 'vm',
@@ -77,15 +78,28 @@
                 }
             }
             else {
-                translateJobService.getByCultureAndStatusPaged(culture, status[0], status[1], page)
-                    .then(function (result) {
-                        vm.results = result.data;
-                        vm.loading = false;
-                        getUserNames(vm.results);
-                    }, function (error) {
-                        notificationsService
-                            .error('Load failed', error.data.ExceptionMessage);
-                    });
+                if (culture !== undefined) {
+                    translateJobService.getByCultureAndStatusPaged(culture, status[0], status[1], page)
+                        .then(function (result) {
+                            vm.results = result.data;
+                            vm.loading = false;
+                            getUserNames(vm.results);
+                        }, function (error) {
+                                notificationsService
+                                    .error('Load failed', error.data.ExceptionMessage);
+                        });
+                }
+                else {
+                    translateJobService.getByStatus(status[0], status[1], page)
+                        .then(function (result) {
+                            vm.results = result.data;
+                            vm.loading = false;
+                            getUserNames(vm.results);
+                        }, function (error) {
+                            notificationsService
+                                .error('Load failed', error.data.ExceptionMessage);
+                        });
+                }
             }
         }
 

@@ -37,7 +37,8 @@
     <div ng-if="vm.job.provider !== undefined">
         <translate-provider-view job="vm.job" 
                                  provider-key="vm.job.provider.Key"
-                                 status="vm.job.status">
+                                 status="vm.job.status"
+                                 is-valid="vm.isValid">
         </translate-provider-view>
     </div>
 

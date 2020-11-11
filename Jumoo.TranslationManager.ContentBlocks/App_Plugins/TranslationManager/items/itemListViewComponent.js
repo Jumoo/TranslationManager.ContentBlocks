@@ -395,7 +395,7 @@
             editorService.open({
                 nodeId: item.Id,
                 title: 'Item View',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'backoffice/items/view.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'backoffice/items/view.html',
                 submit: function (done) {
                     editorService.close();
                 },

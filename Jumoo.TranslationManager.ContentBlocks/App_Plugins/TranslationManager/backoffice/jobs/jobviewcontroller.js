@@ -8,7 +8,7 @@
         var vm = this;
         vm.loading = true;
 
-        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.Options.BatchSize;
+        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.options.batchSize;
 
         vm.job = {};
         vm.items = [];
@@ -294,11 +294,14 @@
 
                 vm.update = {
                     status: 'working',
-                    msg: 'processing group ' + c + ' of ' + batches.length,
+                    msg: 'Processing group ' + c + ' of ' + batches.length,
                     progress: c / batches.length * 100
                 };
 
                 var finalCheck = c === batches.length;
+                if (finalCheck) {
+                    vm.update.msg += ' and finalizing job';
+                }
 
                 var options = {
                     nodeIds: items,
@@ -313,6 +316,7 @@
                         }
                         else {
                             vm.update.status = 'done';
+                            vm.update.msg = 'complete';
                             callback();
                         }
                     }, function (error) {

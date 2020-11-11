@@ -29,7 +29,7 @@
             title: $scope.model.title + ' ' + vm.currentNodeName
         };
 
-        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.Options.BatchSize;
+        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.options.batchSize;
         vm.hasChildren = false;
 
         // options
@@ -38,6 +38,7 @@
         vm.unpublished = true;
         vm.picked = [];
         vm.autoApprove = true;
+        vm.isValid = true; 
 
         // data 
         vm.nodes = [];
@@ -121,13 +122,13 @@
         function createNodes(createJobWhenComplete) {
             vm.busy = true;
             showMessage({
-                update: 'getting content nodes'
+                update: 'Getting content nodes'
             });
 
             var options = {
                 includeUnpublished: vm.unpublished,
                 sites: vm.picked,
-                clientId: getClientId()
+                clientId: vm.hub.clientId()
             };
 
             translateNodeManager.createNodes(
@@ -138,7 +139,7 @@
                     }
                     complete(nodes);
                 }, function (error) {
-                    showError(error);
+                    showError("CreateNodes", error);
                 });
 
 
@@ -156,7 +157,7 @@
 
             var groupId = createNewGroupId();
 
-            showMessage({ progress: 0, update: 'creating ' + groups.length + ' jobs' });
+            showMessage({ progress: 0, update: 'Creating ' + groups.length + ' jobs' });
 
 
             var jobPromises = [];
@@ -170,7 +171,7 @@
                     providerKey: vm.job.provider.Key,
                     providerOptions: vm.job.providerOptions,
                     autoApprove: autoApproveJob,
-                    clientId: getClientId(),
+                    clientId: vm.hub.clientId(),
                     groupId: groupId
                 };
 
@@ -186,7 +187,7 @@
                             vm.jobs.push(result.data);
 
                         }, function (error) {
-                            showError(error);
+                            showError("CreateJob", error);
                         })
                 );
             });
@@ -209,7 +210,7 @@
                             vm.step = 'done-job';
                         }
                     }, function (error) {
-                        showError(error);
+                        showError("Submit Group", error);
                     });
             });
 
@@ -229,14 +230,15 @@
             vm.update = message.update;
         }
 
-        function showError(error) {
+        function showError(step, error) {
 
             vm.busy = false;
             vm.step = 'error';
 
-            console.log('Error', error.data);
+            console.log('Error', step, error.data);
 
             vm.error = {
+                step: step,
                 message: error.data.ExceptionMessage,
                 stack: error.data.StackTrace
             };
@@ -265,7 +267,12 @@
                 set.Sites.forEach(function (site) {
                     if (vm.selectedLanguages.includes(site.Culture.DisplayName)) {
                         site.checked = true;
-                        vm.picked.push({ siteId: site.Id, cultureId: site.Culture.Name, setId: set.Id });
+                        vm.picked.push({
+                            siteId: site.Id,
+                            cultureName: site.Culture.Name,
+                            setId: set.Id,
+                            cultureDisplay: site.Culture.DisplayName
+                        });
                     }
                 });
             });
@@ -371,15 +378,6 @@
 
                 vm.hub.start();
             });
-        }
-
-        // gets the clientId from the signalRHub
-        function getClientId() {
-            if ($.connection !== undefined && $.connection.hub !== undefined) {
-                return $.connection.hub.id;
-            }
-
-            return '';
         }
 
         // psudo guid gen, so we get something unique 

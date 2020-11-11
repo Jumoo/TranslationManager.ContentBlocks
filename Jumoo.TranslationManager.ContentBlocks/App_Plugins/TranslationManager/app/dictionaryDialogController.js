@@ -84,7 +84,7 @@
             var options = {
                 sites: vm.picked,
                 setId: set.Id,
-                clientId: getClientId()
+                clientId: vm.hub.clientId()
             };
 
             translateNodeManager.createDictionaryNodes(vm.currentNodeId, options,
@@ -94,7 +94,7 @@
                     }
                     complete(nodes);
                 }, function (error) {
-                    showError(error);
+                    showError("CreateNodes", error);
                 });
         }
 
@@ -118,7 +118,7 @@
                     providerKey: vm.job.provider.Key,
                     providerOptions: vm.job.providerOptions,
                     autoApprove: autoApproveJob,
-                    clientId: getClientId()
+                    clientId: vm.hub.clientId()
                 };
 
                 translateNodeManager.createJob(options)
@@ -136,7 +136,7 @@
                             vm.step = 'done-job';
                         }
                     }, function (error) {
-                        showError(error);
+                        showError("CreateJob", error);
                     });
             });
         }
@@ -214,14 +214,15 @@
             vm.update = message.update;
         }
 
-        function showError(error) {
+        function showError(step, error) {
 
             vm.busy = false;
             vm.step = 'error';
 
-            console.log('Error', error.data);
+            console.log('Error', step, error.data);
 
             vm.error = {
+                step: step,
                 message: error.data.ExceptionMessage,
                 stack: error.data.StackTrace
             };
@@ -261,16 +262,6 @@
                 vm.hub.start();
             });
         }
-
-        // gets the clientId from the signalRHub
-        function getClientId() {
-            if ($.connection !== undefined && $.connection.hub !== undefined) {
-                return $.connection.hub.id;
-            }
-
-            return '';
-        }
-
     }
 
     angular.module('umbraco')

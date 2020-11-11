@@ -10,14 +10,27 @@
         controller: translateWordCountController
     };
 
-    function translateWordCountController(translateNodeService) {
+    function translateWordCountController(translateNodeService, eventsService, $timeout) {
 
         var vm = this;
         vm.loading = true;
         vm.counts = {};
+        vm.counted = false;
 
         vm.$onInit = function () {
-            getWordCountInfo(vm.contentId);
+
+            eventsService.on("app.tabChange", function (event, args) {
+                $timeout(function () {
+
+                    if (args.alias === 'tmContent') {
+                        if (!vm.counted) {
+                            getWordCountInfo(vm.contentId);
+                            vm.counted = true;
+                        }
+                    }
+                });
+            });
+            
         };
 
         ///////////

@@ -5,7 +5,8 @@
         bindings: {
             job: '=',
             providerKey: '<',
-            status: '<'
+            status: '<',
+            isValid: '='
         },
         controllerAs: 'vm',
         controller: providerViewController

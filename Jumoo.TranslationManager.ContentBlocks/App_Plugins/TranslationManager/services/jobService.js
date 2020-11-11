@@ -13,7 +13,7 @@
 
     function jobService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.JobService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.jobService;
 
         var service = {
             get: get,
@@ -36,6 +36,8 @@
             getByUserCultureAndStatus: getByUserCultureAndStatus,
             getUserDisplayNames: getUserDisplayNames,
             getUserDisplayName: getUserDisplayName,
+
+            getByStatus: getByStatus,
 
             create: create,
             submit: submit,
@@ -120,6 +122,10 @@
         function getByUserCultureAndStatus(id, cultureId, minStatus, maxStatus, page) {
             return $http.get(serviceRoot + "GetByUserCultureAndStatus/" +
                 id + "?cultureId=" + cultureId + "&min=" + minStatus + "&max=" + maxStatus + "&page=" + page);
+        }
+
+        function getByStatus(minStatus, maxStatus, page) {
+            return $http.get(serviceRoot + "GetByStatus/?min=" + minStatus + "&max=" + maxStatus + "&page=" + page);
         }
 
         function getUserDisplayNames(ids) {

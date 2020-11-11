@@ -31,8 +31,8 @@
             errorCallback)
         {
             msgCallback({
-                progress: { done: 0, step: 'starting up' },
-                update: 'getting content ids'
+                progress: { done: 0, step: 'Starting up' },
+                update: 'Getting content ids'
             });
 
             translateNodeService.getContentIds(nodeId, children)
@@ -99,7 +99,7 @@
                 b++;
 
                 var msg = {
-                    progress: { done: b / batches.length * 100, step: 'group ' + b + ' of ' + batches.length },
+                    progress: { done: b / batches.length * 100, step: 'Group ' + b + ' of ' + batches.length },
                     update: 'processing batch'
                 };
                 msgCallback(msg);

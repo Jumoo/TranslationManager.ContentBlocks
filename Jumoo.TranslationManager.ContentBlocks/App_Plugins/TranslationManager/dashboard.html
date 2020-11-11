@@ -48,17 +48,23 @@
                     <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewSubmitted()">
                         <umb-box-content>
                             <div class="tm-info-count">
-                                {{vm.counts.submitted}}
+                                {{vm.counts.submitted.jobs}}
                             </div>
-                            Submitted Job<span ng-if="vm.counts.submitted != 1">s</span>
+                            <div>
+                                Submitted Job<span ng-if="vm.counts.submitted.jobs != 1">s</span>
+                            </div>
+                            <em>({{vm.counts.submitted.nodes}} items)</em>
                         </umb-box-content>
                     </umb-box>
                     <umb-box ng-if="vm.sets.length > 0" class="tm-info-box" ng-click="vm.viewReceived()">
                         <umb-box-content>
                             <div class="tm-info-count">
-                                {{vm.counts.received}}
+                                {{vm.counts.received.jobs}}
                             </div>
-                            Received Job<span ng-if="vm.counts.received != 1">s</span>
+                            <div>
+                                Received Job<span ng-if="vm.counts.received.jobs != 1">s</span>
+                            </div>
+                            <em">({{vm.counts.received.nodes}} items)</em>
                         </umb-box-content>
                     </umb-box>
                 </div>

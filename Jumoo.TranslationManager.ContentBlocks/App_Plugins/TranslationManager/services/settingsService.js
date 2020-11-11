@@ -13,7 +13,7 @@
 
     function settingsService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.SettingsService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.settingsService;
 
         var service = {
             getTabs: getTabs,

@@ -14,7 +14,7 @@
         vm.status = 0;
         vm.node = editorState.current;
 
-        vm.canSend = editorState.current.allowedActions.indexOf(Umbraco.Sys.ServerVariables.translationManager.Options.SendLetter) !== -1;
+        vm.canSend = editorState.current.allowedActions.indexOf(Umbraco.Sys.ServerVariables.translationManager.options.sendLetter) !== -1;
         if (vm.canSend) {
             canBeSent(vm.nodeId);
         }

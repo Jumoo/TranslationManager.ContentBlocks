@@ -33,6 +33,7 @@
                         <div class="status-message alert alert-danger">
                             {{vm.error.message}}
                         </div>
+                        <div>Step: {{vm.error.step}}</div>
                         <div class="status-message-stack">
                             <pre>{{vm.error.stack}}</pre>
                         </div>
@@ -117,7 +118,8 @@
                     <div ng-if="vm.step == 'job'">
                         <translate-job-options job="vm.job"
                                                provider-key="vm.providerKey"
-                                               provider="vm.job.provider">
+                                               provider="vm.job.provider"
+                                               is-valid="vm.isValid">
                         </translate-job-options>
                     </div>
 
@@ -199,7 +201,7 @@
                             label-key="general_create"
                             action="vm.createNodesAndJob(vm.site)"
                             ng-if="vm.step == 'job'"
-                            disabled="vm.busy || vm.job.provider === undefined">
+                            disabled="vm.busy || vm.job.provider === undefined || !vm.isValid">
                 </umb-button>
 
                 <umb-button type="button"

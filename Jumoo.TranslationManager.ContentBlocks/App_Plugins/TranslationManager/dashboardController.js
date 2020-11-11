@@ -29,8 +29,12 @@
 
         vm.counts = {
             pending: -1,
-            submitted: -1,
-            received: -1
+            submitted: {
+                jobs: '-', nodes: '-'
+            },
+            received: {
+                jobs: '-', nodes: '-'
+            }
         };
 
         Init();

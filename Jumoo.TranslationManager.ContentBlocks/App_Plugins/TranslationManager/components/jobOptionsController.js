@@ -6,7 +6,8 @@
         bindings: {
             job: '=',
             provider: '=',
-            providerKey: '<'
+            providerKey: '<',
+            isValid: '='
         },
         controllerAs: 'vm',
         controller: jobOptionsController
