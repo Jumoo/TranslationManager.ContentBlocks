@@ -107,24 +107,6 @@ namespace Jumoo.TranslationManager.ContentBlocks
         }
 
         /// <summary>
-        ///  gets the doctype and the value of the block, so we 
-        ///  can use the base class to do all the link finding legwork.
-        /// </summary>
-        protected override (IContentType docType, JObject value) GetDocTypeAndValue(JObject item)
-        {
-            var alias = item["ncContentTypeAlias"].ToString();
-            var value = item;
-
-            if (!string.IsNullOrWhiteSpace(alias))
-            {
-                var docType = contentTypeService.Get(alias);
-                return (docType, value);
-            }
-
-            return (null, null);
-        }
-
-        /// <summary>
         ///  Turn the object we get passed into a json object
         /// </summary>
         /// <remarks>
@@ -142,6 +124,34 @@ namespace Jumoo.TranslationManager.ContentBlocks
             if (!stringValue.Result.DetectIsJson()) return null;
 
             return JsonConvert.DeserializeObject<JObject>(stringValue.Result);
+        }
+
+        /// <summary>
+        /// Gets the doctype of the block.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        protected override IContentType GetDocType(JObject item)
+        {
+            var alias = item["ncContentTypeAlias"].ToString();
+
+            if (!string.IsNullOrWhiteSpace(alias))
+            {
+                var docType = contentTypeService.Get(alias);
+                return docType;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Returns the json object.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        protected override JObject GetJsonObject(JObject item)
+        {
+            return item;
         }
     }
 }
