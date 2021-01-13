@@ -29,7 +29,7 @@
         function open() {
             var options = {
                 title: 'Site / Lanaugage Picker',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sitepicker/sitepickerDialog.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'sitepicker/sitepickerDialog.html',
                 size: 'small',
                 submit: function (site) {
                     editorService.close();

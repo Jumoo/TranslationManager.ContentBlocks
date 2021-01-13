@@ -8,6 +8,7 @@
 
         var vm = this;
         vm.loading = true;
+        vm.isValid = true;
 
         vm.page = {
             title: 'provider',

@@ -34,5 +34,19 @@
                 </li>
             </ul>
         </umb-box-content>
+
+        <umb-box-header title="Custom Mappings"></umb-box-header>
+        <umb-box-content>
+            <p>
+                Map any custom property to an existing mapped property, using the <code>&lt;mappings&gt;</code> section of the 
+                translations.config file. <a href="https://docs.jumoo.co.uk/tm/v8/mapping/" target="_blank">More info</a>
+            </p>
+            <ul>
+                <li ng-repeat="(key, value) in vm.info.CustomMappings">
+                    <strong>{{key}}</strong> &rarr; {{value}}
+                </li>
+            </ul>
+        </umb-box-content>
     </umb-box>
+
 </div>

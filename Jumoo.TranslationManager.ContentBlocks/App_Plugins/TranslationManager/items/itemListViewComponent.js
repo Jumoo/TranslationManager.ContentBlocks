@@ -20,7 +20,7 @@
     };
 
     function itemListViewController($scope, $filter, editorService, 
-        notificationsService,
+        notificationsService, localizationService, overlayService,
         translateNodeService,
         translateJobService,
         translateSetService) {
@@ -358,22 +358,37 @@
 
         /// item management 
         function removeAll() {
-            if (confirm('are you sure')) {
-                vm.buttonState = 'busy';
 
-                translateNodeService.removeOpenByCulture(vm.culture)
-                    .then(function (result) {
-                        notificationsService
-                            .success('remove', 'all items removed');
-                        vm.refresh();
-                        vm.buttonState = 'success';
-                    }, function (error) {
-                        notificationsService
-                            .error('failed', 'failed to remove nodes');
-                        vm.buttonState = 'error';
-                    });
-            }
-        }
+            localizationService.localizeMany(["translate_removeAllTitle", "translate_removeAllMessage"])
+                .then(function (values) {
+                    var overlay = {
+                        title: values[0],
+                        content: values[1],
+                        submitButtonLabelKey: "translate_removeAllConfirm",
+                        closeButtonLabelKey: "translate_removeAllCancel",
+                        disableBackdropClick: true,
+                        disableEscKey: true,
+                        submit: function () {
+                            overlayService.close();
+                            vm.buttonState = 'busy';
+
+                            translateNodeService.removeOpenByCulture(vm.culture)
+                                .then(function (result) {
+                                    notificationsService
+                                        .success('remove', 'all items removed');
+                                    vm.refresh();
+                                    vm.buttonState = 'success';
+                                }, function (error) {
+                                    notificationsService
+                                        .error('failed', 'failed to remove nodes');
+                                    vm.buttonState = 'error';
+                                });
+                        }
+                    };
+
+                    overlayService.confirmDelete(overlay);
+                });
+        };
 
         /////////
         function defaultAction(item) {
@@ -395,7 +410,7 @@
             editorService.open({
                 nodeId: item.Id,
                 title: 'Item View',
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'backoffice/items/view.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'backoffice/items/view.html',
                 submit: function (done) {
                     editorService.close();
                 },

@@ -1,7 +1,13 @@
 ﻿<div>
     <umb-load-indicator ng-if="vm.loading"></umb-load-indicator>
     <div ng-if="!vm.loading">
+        <div ng-if="vm.userView == true" class="alert alert-success flex justify-between items-center">
+            <div>Only showing jobs owned by you.</div>
+            <button class="btn btn-default btn-sm" ng-click="vm.toggleUser()">Show all jobs</button>
+        </div>
+
         <div ng-if="vm.results.items.length > 0">
+
 
             <div class="umb-table translate-table">
                 <div class="umb-table-head">
@@ -77,12 +83,8 @@
 
                 <div style="margin: 20px 0;">
                     <div ng-if="vm.hideUserToggle != true">
-                        <umb-toggle checked="vm.userView"
-                                    on-click="vm.toggleUser()"
-                                    show-labels="true"
-                                    label-on="My Jobs"
-                                    label-off="All Jobs"
-                                    label-position="right"></umb-toggle>
+                        <button ng-click="vm.toggleUser()" class="btn btn-default btn-sm" ng-if="vm.userView != true">Show my jobs</button>
+                        <button ng-click="vm.toggleUser()" class="btn btn-default btn-sm" ng-if="vm.userView == true">Show all jobs</button>
                     </div>
                 </div>
 
@@ -91,7 +93,7 @@
 
         </div>
 
-        <umb-empty-state ng-if="!vm.results || vm.results.items.length == 0">
+        <umb-empty-state ng-if="!vm.hideNoJobMessage && (!vm.results || vm.results.items.length == 0)">
             <h5>No Jobs</h5>
             <p ng-if="vm.userView != true">
                 There are no jobs for this language / node.

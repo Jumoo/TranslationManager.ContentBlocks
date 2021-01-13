@@ -26,20 +26,20 @@
                     'name': 'Set',
                     'alias': 'set',
                     'icon': 'icon-molecular',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sets/set.html',
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'sets/set.html',
                     'active': true
                 },
                 {
                     'name': 'Notifications',
                     'alias': 'notify',
                     'icon': 'icon-message',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sets/notify.html',
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'sets/notify.html',
                 }/*,
                 {
                     'name': 'Permissions',
                     'alias': 'permissions',
                     'icon': 'icon-lock',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sets/permissions.html',
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'sets/permissions.html',
                 }*/
             ]
         };
@@ -186,7 +186,7 @@
         function initPickers() {
             vm.masterPicker = {
                 value: vm.set.MasterSite,
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sitepicker/picker.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'sitepicker/picker.html',
                 validation: {
                     mandatory: true
                 },
@@ -197,7 +197,7 @@
 
             vm.sitePicker = {
                 value: vm.set.Sites,
-                view: Umbraco.Sys.ServerVariables.translationManager.Plugin + 'sitepicker/picker.html',
+                view: Umbraco.Sys.ServerVariables.translationManager.plugin + 'sitepicker/picker.html',
                 validation: {
                     mandatory: false
                 },

@@ -10,6 +10,7 @@
         vm.loading = true;
 
         vm.viewJobs = viewJobs;
+        vm.statusRange = [1, 9];
 
         loadJobInfo();
 

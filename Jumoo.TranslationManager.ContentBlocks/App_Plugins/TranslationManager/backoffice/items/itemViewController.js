@@ -29,6 +29,11 @@
         vm.close = close;
         vm.editContent = editContent;
 
+        vm.debugMode = false;
+        if ($location.search().tm !== undefined) {
+            vm.debugMode = $location.search().tm == 'debug';
+        }
+
         vm.$onInit = function () { loadItem(vm.id); localizeText(); };
 
         ///// 
@@ -49,7 +54,7 @@
         }
 
         function isEditable(status) {
-            return status !== 'Approved' && status !== 'InProgress';
+            return vm.debugMode || status !== 'Approved' && status !== 'InProgress';
         }
 
         function close() {

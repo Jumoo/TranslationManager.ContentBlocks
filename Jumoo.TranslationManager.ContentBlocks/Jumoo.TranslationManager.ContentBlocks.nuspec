@@ -11,7 +11,7 @@
     <releaseNotes><![CDATA[8.0 Initial Release]]></releaseNotes>
     <tags>umbraco usync</tags>
     <dependencies>
-      <dependency id="Jumoo.TranslationManager" version="8.2.8" />
+      <dependency id="Jumoo.TranslationManager" version="8.4.3" />
       <dependency id="Perplex.ContentBlocks" version="1.2.0" />
     </dependencies>
   </metadata>

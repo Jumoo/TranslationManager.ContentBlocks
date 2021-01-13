@@ -4,7 +4,7 @@
 
     function statusService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.StatusService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.statusService;
 
         var service = {
             getStatus : getStatus

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
+using Jumoo.TranslationManager.Core.Extensions;
 using Jumoo.TranslationManager.Core.Models;
 using Jumoo.TranslationManager.LinkUpdater;
 using Jumoo.TranslationManager.LinkUpdater.LinkMappers;
@@ -19,6 +21,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
 {
     public class ContentBlocksLinkMapper : LinkMapperNestedBase, ILinkMapper
     {
+        private readonly string docTypeKeyAlias = "ncContentTypeAlias";
         public readonly IContentTypeService contentTypeService;
 
         public ContentBlocksLinkMapper(
@@ -105,25 +108,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
             targetBlock["content"] = targetContent;
             return targetBlock;
         }
-
-        /// <summary>
-        ///  gets the doctype and the value of the block, so we 
-        ///  can use the base class to do all the link finding legwork.
-        /// </summary>
-        protected override (IContentType docType, JObject value) GetDocTypeAndValue(JObject item)
-        {
-            var alias = item["ncContentTypeAlias"].ToString();
-            var value = item;
-
-            if (!string.IsNullOrWhiteSpace(alias))
-            {
-                var docType = contentTypeService.Get(alias);
-                return (docType, value);
-            }
-
-            return (null, null);
-        }
-
+       
         /// <summary>
         ///  Turn the object we get passed into a json object
         /// </summary>
@@ -143,5 +128,11 @@ namespace Jumoo.TranslationManager.ContentBlocks
 
             return JsonConvert.DeserializeObject<JObject>(stringValue.Result);
         }
+
+        protected override IContentType GetDocType(JObject item)
+            => contentTypeService.GetDocTypeByKey(item, this.docTypeKeyAlias);
+
+        protected override JObject GetJsonObject(JObject item)
+            => item;
     }
 }

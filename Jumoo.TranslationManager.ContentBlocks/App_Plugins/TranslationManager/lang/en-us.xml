@@ -86,7 +86,38 @@
 
     <key alias="languagesSelect">Select the languages you want to translate to</key>
 
-    <key alias="properties">Properties</key>
+		<key alias="cancelJob">Cancel Job</key>
+		<key alias="cancelTitle">Cancel Job ?</key>
+		<key alias="cancelMessage">Are your sure you want to cancel this job?</key>
+		<key alias="cancelConfirm">Yes cancel</key>
+		<key alias="cancelCancel">Keep</key>
+
+		<key alias="removeJob">Remove Job</key>
+		<key alias="removeTitle">Remove Job ?</key>
+		<key alias="removeMessage">Are your sure you want to remove this job?. All data from the job will be removed and cannot be restored.</key>
+		<key alias="removeConfirm">Yes remove</key>
+		<key alias="removeCancel">Keep</key>
+
+		<key alias="resetSubmittedTitle">Reset Job?</key>
+		<key alias="resetSubmittedMessage">Are you sure you want to reset the job back status back to 'submitted'? Not all jobs will be able to progress from submitted a second time</key>
+		<key alias="resetSubmittedConfirm">Reset to Submitted</key>
+		<key alias="resetSubmittedCancel">Cancel</key>
+
+		<key alias="resetReceivedTitle">Reset Job?</key>
+		<key alias="resetReceivedMessage">Are you sure you want to reset the job back status back to 'received'?. You will need to reapprove a job to get the content in umbraco</key>
+		<key alias="resetReceivedConfirm">Reset to Received</key>
+		<key alias="resetReceivedCancel">Cancel</key>
+
+		<key alias="removeAllTitle">Remove all items?</key>
+		<key alias="removeAllMessage">Are you sure you want to remove all the items?</key>
+		<key alias="removeAllConfirm">Yes, remove all</key>
+		<key alias="removeAllCancel">Cancel</key>
+
+		<key alias="cloneTitle">Clone contnet?</key>
+		<key alias="cloneMessage"><![CDATA[Are you sure you want to clone the content from %0% to %1% ? Doing so will wipe all existing content from the target language"]]></key>
+		<key alias="cloneConfirm">Clone</key>
+
+		<key alias="properties">Properties</key>
     <key alias="wordEstimate">Estimated Words*</key>
     <key alias="charEstimate">Estimated characters*</key>
     <key alias="estimateDisclaim">

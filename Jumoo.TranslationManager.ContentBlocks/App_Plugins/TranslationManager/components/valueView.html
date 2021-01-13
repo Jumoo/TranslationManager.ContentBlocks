@@ -3,7 +3,7 @@
         <h4>{{vm.value.DisplayName}}</h4>
         <div class="flex">
             <div class="translate-value-box"
-                 ng-class="{'source' : !vm.isTarget, 'pending' : !target.translated, 'complete' : target.translated}">
+                 ng-class="{'source' : !vm.isTarget, 'pending' : !vm.value.Translated, 'completed' : vm.value.Translated}">
                 <div ng-if="vm.value.Value || vm.value.Value.length > 0">
                     <div ng-if="vm.edit">
                         <span class="translate-value-edit-controls">
@@ -32,14 +32,16 @@
                     <i class="icon icon-code pull-left" ng-show="value.HtmlControl" title="html"></i>
                     <i class="icon icon-autofill pull-left" ng-show="!value.HtmlControl" title="text"></i>
 
-                    {{vm.valud.Id}} {{vm.value.AdditionalSettings}}
+                    <div>
+                        {{vm.value.Id}} {{vm.value.AdditionalSettings}}
+                    </div>
 
                     <i class="icon icon-check color-green" title="translated"
-                       ng-if="vm.Translated"></i>
+                       ng-if="vm.isTarget && vm.value.Translated"></i>
 
                     <i class="icon icon-axis-rotation color-orange"
                        title="waiting for translation"
-                       ng-if="!target.Translated && vm.editable"></i>
+                       ng-if="vm.isTarget && !vm.value.Translated"></i>
                 </div>
             </div>
         </div>

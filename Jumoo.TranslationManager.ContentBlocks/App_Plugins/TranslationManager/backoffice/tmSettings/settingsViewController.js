@@ -23,26 +23,26 @@
                     'name': 'Settings',
                     'alias': 'settings',
                     'icon': 'icon-settings',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'settings/settings.html',
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'settings/settings.html',
                     'active': true
                 },
                 {
                     'name': 'licence',
                     'alias': 'licence',
                     'icon': 'icon-lock',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'settings/licence.html'
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'settings/licence.html'
                 },
                 {
                     'name': 'Notifications',
                     'alias': 'notifications',
                     'icon': 'icon-message',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'settings/notifications.html'
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'settings/notifications.html'
                 },
                 {
                     'name': 'Diagnostics',
                     'alias': 'diagnostics',
                     'icon': 'icon-lab',
-                    'view': Umbraco.Sys.ServerVariables.translationManager.Plugin + 'settings/diagnostics.html'
+                    'view': Umbraco.Sys.ServerVariables.translationManager.plugin + 'settings/diagnostics.html'
                 }
             ]
         };

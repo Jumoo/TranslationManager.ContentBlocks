@@ -160,7 +160,8 @@
 
     .translate-value-box .translate-value-data {
         min-height: 25px;
-        display: block;
+        display: flex;
+        justify-content: space-between;
         background-color: rgba(0,0,0,0.1);
         padding: 5px 10px;
     }
@@ -174,7 +175,8 @@
     }
 
     .translate-value-box.completed {
-        background-color: rgba(76,175,80,0.16);
+        
+            background-color: rgba(76,175,80,0.16);
     }
 
     .translate-value-box.source {

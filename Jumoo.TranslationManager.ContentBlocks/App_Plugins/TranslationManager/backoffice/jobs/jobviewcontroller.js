@@ -2,13 +2,13 @@
     'use strict';
 
     function jobViewController($scope, $rootScope, $routeParams, $timeout, navigationService,
-        notificationsService,
+        notificationsService, overlayService, localizationService,
         translateJobService) {
 
         var vm = this;
         vm.loading = true;
 
-        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.Options.BatchSize;
+        vm.batchSize = Umbraco.Sys.ServerVariables.translationManager.options.batchSize;
 
         vm.job = {};
         vm.items = [];
@@ -192,23 +192,48 @@
                 });
         }
 
-        function cancel() {
-            vm.buttonState = 'busy';
-            translateJobService.cancel(vm.jobId)
-                .then(function (result) {
-                    vm.buttonState = 'success';
-                    notificationsService
-                        .success("cancelled", "the job has been canceled - all nodes have been reset.");
-                    vm.refresh();
-                }, function (error) {
-                    notificationsService
-                        .error("Error", "Unable to cancel the job");
-                    vm.buttonState = 'error';
+        function confirmOverlay(key, confirmType, cb) {
+
+            localizationService.localizeMany(["translate_" + key + "Title", "translate_" + key + "Message"])
+                .then(function (values) {
+
+                    var overlay = {
+                        title: values[0],
+                        content: values[1],
+                        submitButtonLabelKey: "translate_" + key + "Confirm",
+                        closeButtonLabelKey: "translate_" + key + "Cancel",
+                        disableBackdropClick: true,
+                        disableEscKey: true,
+                        confirmType: confirmType,
+                        submit: function () {
+                            cb();
+                            overlayService.close();
+                        }
+                    };
+
+                    overlayService.confirm(overlay);
                 });
         }
 
+        function cancel() {
+            confirmOverlay("cancel", "delete", function () {
+                vm.buttonState = 'busy';
+                translateJobService.cancel(vm.jobId)
+                    .then(function (result) {
+                        vm.buttonState = 'success';
+                        notificationsService
+                            .success("cancelled", "the job has been canceled - all nodes have been reset.");
+                        vm.refresh();
+                    }, function (error) {
+                        notificationsService
+                            .error("Error", "Unable to cancel the job");
+                        vm.buttonState = 'error';
+                    });
+            });
+        }
+
         function remove() {
-            if (confirm("Are you sure you want to remove this job? All data will be removed and cannot be restored")) {
+            confirmOverlay("remove", "delete", function () {
                 vm.buttonState = 'busy';
                 translateJobService.remove(vm.jobId)
                     .then(function () {
@@ -221,8 +246,7 @@
                         notificationsService
                             .error("Error", error.data.ExceptionMessage);
                     });
-
-            }
+            });
         }
 
         function approveJob() {
@@ -294,11 +318,14 @@
 
                 vm.update = {
                     status: 'working',
-                    msg: 'processing group ' + c + ' of ' + batches.length,
+                    msg: 'Processing group ' + c + ' of ' + batches.length,
                     progress: c / batches.length * 100
                 };
 
                 var finalCheck = c === batches.length;
+                if (finalCheck) {
+                    vm.update.msg += ' and finalizing job';
+                }
 
                 var options = {
                     nodeIds: items,
@@ -313,6 +340,7 @@
                         }
                         else {
                             vm.update.status = 'done';
+                            vm.update.msg = 'complete';
                             callback();
                         }
                     }, function (error) {
@@ -326,15 +354,16 @@
 
 
         function resetStatus() {
-            if (confirm("Are you sure you want to reset the job back status back to 'submitted' not all jobs will be able to progress from submitted a second time")) {
+
+            confirmOverlay("resetSubmitted", "info", function () {
                 resetToStatus(1);
-            }
+            });
         }
 
         function resetToReceived() {
-            if (confirm("Are you sure you want to reset the job back status back to 'Received' you will need to reapprove a job to get the content in umbraco")) {
+            confirmOverlay("resetReceived", "info", function () {
                 resetToStatus(15);
-            }
+            });
         }
 
         function archive() {

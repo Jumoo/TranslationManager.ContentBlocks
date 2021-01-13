@@ -1,5 +1,6 @@
 {
   "javascript": [
+    "~/App_Plugins/TranslationManager/translate-842.js",
     "~/App_Plugins/TranslationManager/services/cultureService.js",
     "~/App_Plugins/TranslationManager/services/jobService.js",
     "~/App_Plugins/TranslationManager/services/nodeService.js",
@@ -60,9 +61,7 @@
 
     "~/App_Plugins/TranslationManager/dashboardController.js",
 
-    "~/App_Plugins/TranslationManager/translateHub.js",
-
-    "~/App_Plugins/TranslationManager/translate-820.js?tm=827"
+    "~/App_Plugins/TranslationManager/translateHub.js"
   ],
   "css": [
     "~/App_Plugins/TranslationManager/translationManager.css"

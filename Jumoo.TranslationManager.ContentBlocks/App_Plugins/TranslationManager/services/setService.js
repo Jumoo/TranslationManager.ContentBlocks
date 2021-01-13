@@ -13,7 +13,7 @@
 
     function setService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.SetService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.setService;
 
         var service = {
 

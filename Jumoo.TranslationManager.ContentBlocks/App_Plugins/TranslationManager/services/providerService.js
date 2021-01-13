@@ -13,7 +13,7 @@
 
     function providerService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.ProviderService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.providerService;
 
         var service = {
             getProviders: getProviders,

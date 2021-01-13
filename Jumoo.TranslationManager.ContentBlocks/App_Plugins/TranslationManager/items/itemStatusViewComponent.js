@@ -12,6 +12,7 @@
 
     function itemStatusViewController($scope,
         $routeParams,
+        localizationService, overlayService,
         editorService,
         editorState,
         notificationsService,
@@ -95,14 +96,28 @@
             }
             var source = vm.currentCulture;
 
-            if (confirm("Are you sure you want to clone the content from " + source + " to " + target + "?\nDoing so will wipe all existing content from the target language")) {
 
-                translateNodeService.cloneNode(vm.node.id, source, target)
-                    .then(function (result) {
-                        notificationsService.success('Cloned', 'Content Cloned to ' + target);
-                        eventsService.emit('editors.documentType.saved', { documentType: { id: vm.node.contentTypeId } });
-                    });
-            }
+            localizationService.localizeMany(["translate_cloneTitle", "translate_cloneMessage"])
+                .then(function (values) {
+                    var overlay = {
+                        title: values[0],
+                        content: localizationService.tokenReplace(values[1], [source, target]),
+                        submitButtonLabelKey: "translate_cloneConfirm",
+                        disableBackdropClick: true,
+                        disableEscKey: true,
+                        submit: function () {
+                            overlayService.close();
+
+                            translateNodeService.cloneNode(vm.node.id, source, target)
+                                .then(function (result) {
+                                    notificationsService.success('Cloned', 'Content Cloned to ' + target);
+                                    eventsService.emit('editors.documentType.saved', { documentType: { id: vm.node.contentTypeId } });
+                                });
+                        }
+                    };
+
+                    overlayService.confirmDelete(overlay);
+                });
         }
     }
 

@@ -13,7 +13,7 @@
 
     function cultureService($http) {
 
-        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.CultureService;
+        var serviceRoot = Umbraco.Sys.ServerVariables.translationManager.cultureService;
 
         var service = {
             getCultureInfo: getCultureInfo,
