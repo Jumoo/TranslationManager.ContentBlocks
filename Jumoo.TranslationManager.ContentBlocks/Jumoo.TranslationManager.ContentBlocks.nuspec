@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jumoo.TranslationManager.ContentBlocks</id>
-    <version>8.0.0</version>
+    <version>8.0.1</version>
     <title>Translation Manager ContentBlocks Mappers / Link Updaters</title>
     <authors>Kevin Jump</authors>
     <owners>Kevin Jump</owners>
