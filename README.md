@@ -7,5 +7,5 @@ Also adds Link Updater so relative links will be updated when approving translat
 via package manager: 
 
 ```
-> package-install Jumoo.TranslationManager.ContentBlocks.
+> package-install Jumoo.TranslationManager.ContentBlocks
 ```

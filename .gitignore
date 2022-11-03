@@ -246,5 +246,6 @@ $RECYCLE.BIN/
 .sonarqube
 
 # ignore test site
-**/ContentBlocksTest.Site
-
+**/TestSite.*
+**/__legacy
+**/ContentBlocks-WithSite.sln
