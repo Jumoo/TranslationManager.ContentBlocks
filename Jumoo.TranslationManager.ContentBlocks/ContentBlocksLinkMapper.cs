@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 using Jumoo.TranslationManager.Core.Extensions;
 using Jumoo.TranslationManager.Core.Models;
 using Jumoo.TranslationManager.LinkUpdater;
 using Jumoo.TranslationManager.LinkUpdater.LinkMappers;
-using Localization.Xliff.OM.Core;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+#if NETCOREAPP
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+using Umbraco.Cms.Core.Models;
+#else
 using Umbraco.Core;
 using Umbraco.Core.Models;
 using Umbraco.Core.Services;
+#endif
 
 namespace Jumoo.TranslationManager.ContentBlocks
 {
@@ -25,12 +26,11 @@ namespace Jumoo.TranslationManager.ContentBlocks
         public readonly IContentTypeService contentTypeService;
 
         public ContentBlocksLinkMapper(
-            IContentTypeService contentTypeService,
             IDataTypeService dataTypeService,
-            LinkResolver linkResolver) : base(dataTypeService, linkResolver)
-        {
-            this.contentTypeService = contentTypeService;
-        }
+            Lazy<LinkMapperCollection> linkMappers,
+            LinkResolver linkResolver)
+            : base(dataTypeService, linkMappers, linkResolver)
+        {}
 
         public string Name => "ContentBlocks Link Mapper";
 

@@ -1,22 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Razor.Parser.SyntaxTree;
+
 using Jumoo.TranslationManager.Core;
+using Jumoo.TranslationManager.Core.Extensions;
 using Jumoo.TranslationManager.Core.Models;
 using Jumoo.TranslationManager.Core.ValueMappers;
-using Jumoo.XliffLib.Xliff12.Models;
-using Microsoft.Owin.Security.Provider;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NPoco.fastJSON;
+
+#if NETCOREAPP
+using Umbraco.Cms.Core;
+using Umbraco.Cms.Core.Services;
+using Umbraco.Extensions;
+using Microsoft.Extensions.Logging;
+#else
 using Umbraco.Core;
-using Umbraco.Core.Logging;
 using Umbraco.Core.Services;
-using Umbraco.Web.Models.ContentEditing;
+using Jumoo.TranslationManager.Logging;
+#endif
 
 namespace Jumoo.TranslationManager.ContentBlocks
 {
@@ -28,17 +29,29 @@ namespace Jumoo.TranslationManager.ContentBlocks
     ///  for the ContentBlocks, which allows us to just send the text
     ///  for translation.
     /// </remarks>
-    public class ContentBlocksValueMapper : BaseValueMapper, IValueMapper
+    public class ContentBlocksValueMapper : BaseValueMapper, IPropertyValueMapper
     {
-        public ContentBlocksValueMapper(IContentService contentService, IDataTypeService dataTypeService, IContentTypeService contentTypeService, ILogger logger)
+        private readonly Lazy<ValueMapperCollection> _valueMappers;
+
+        public ContentBlocksValueMapper(
+            IContentService contentService,
+            IDataTypeService dataTypeService,
+            IContentTypeService contentTypeService,
+            ILogger<BaseValueMapper> logger,
+            Lazy<ValueMapperCollection> valueMappers)
             : base(contentService, dataTypeService, contentTypeService, logger)
-        { }
+        {
+            _valueMappers = valueMappers;
+        }
 
         public string Name => "Content Blocks";
 
         public override string[] Editors => new string[] { "Perplex.ContentBlocks" };
 
         public TranslationValue GetSourceValue(string displayName, string propertyTypeAlias, object value, CultureInfoView culture)
+            => GetSourceValue(displayName, propertyTypeAlias, string.Empty, value, culture);
+
+        public TranslationValue GetSourceValue(string displayName, string propertyTypeAlias, string path, object value, CultureInfoView culture)
         {
             var jsonValue = GetJson(value);
             if (jsonValue == null) return null;
@@ -48,12 +61,12 @@ namespace Jumoo.TranslationManager.ContentBlocks
                 return null;
 
             // set up a translation value, as the parent for header & blocks
-            var translation = new TranslationValue(displayName, propertyTypeAlias);
+            var translation = new TranslationValue(displayName, propertyTypeAlias, path);
 
             if (jsonValue.ContainsKey("header"))
             {
                 // get the header
-                var headerValue = GetBlockValue("header", jsonValue["header"], culture);
+                var headerValue = GetBlockValue("header", path.AppendPath("header"), jsonValue["header"], culture);
                 if (headerValue != null)
                 {
                     translation.InnerValues.Add("header", headerValue);
@@ -66,7 +79,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
                 var blocks = jsonValue.Value<JArray>("blocks");
                 for (int b = 0; b < blocks.Count; b++)
                 {
-                    var blockValue = GetBlockValue($"block [{b}]", blocks[b], culture);
+                    var blockValue = GetBlockValue($"block [{b}]", path.AppendPath($"block_{b}"), blocks[b], culture);
                     if (blockValue != null)
                     {
                         var blockKey = blocks[b].Value<string>("id");
@@ -81,7 +94,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
         /// <summary>
         ///  get the translation of the block (falls through to nested content)
         /// </summary>
-        private TranslationValue GetBlockValue(string displayName, JToken block, CultureInfoView culture)
+        private TranslationValue GetBlockValue(string displayName, string path, JToken block, CultureInfoView culture)
         {
             if (block == null) return null;
             if (block is JObject jBlock)
@@ -89,9 +102,10 @@ namespace Jumoo.TranslationManager.ContentBlocks
                 if (!jBlock.ContainsKey("content")) return null;
                 var content = jBlock.Value<JArray>("content");
 
-                return ValueMapperFactory.GetMapperSource(
-                    Constants.PropertyEditors.Aliases.NestedContent,
+                return _valueMappers.Value.GetMapperSource(
                     displayName,
+                    Constants.PropertyEditors.Aliases.NestedContent,
+                    path,
                     content,
                     culture);
             }
@@ -142,7 +156,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
             return JsonConvert.SerializeObject(jsonValue, Formatting.Indented);
         }
 
-        private static JToken GetBlockTranslation(JToken value, TranslationValue translationValue, CultureInfoView sourceCulture, CultureInfoView targetCulture)
+        private JToken GetBlockTranslation(JToken value, TranslationValue translationValue, CultureInfoView sourceCulture, CultureInfoView targetCulture)
         {
             if (value is JObject jValue)
             {
@@ -150,7 +164,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
                 {
                     var content = jValue.Value<JArray>("content");
 
-                    var result = (string)ValueMapperFactory.GetMapperTarget(
+                    var result = (string)_valueMappers.Value.GetMapperTarget(
                         Constants.PropertyEditors.Aliases.NestedContent,
                         content,
                         translationValue,
@@ -180,5 +194,6 @@ namespace Jumoo.TranslationManager.ContentBlocks
             if (!stringValue.DetectIsJson()) return null;
             return JsonConvert.DeserializeObject<JObject>(stringValue);
         }
+
     }
 }
