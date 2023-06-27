@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net472;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net472;net5.0;net6.0;net7.0</TargetFrameworks>
 
 		<Product>Jumoo.TranslationManager.ContentBlocks</Product>
 		<PackageId>Jumoo.TranslationManager.ContentBlocks</PackageId>
@@ -11,7 +11,7 @@
 
 		<PackageReleaseNotes>
 			<![CDATA[8.0 - Translation Manager v8 release
-9.0 - Translation Manager v9/10 Release]]>
+9.0 - Translation Manager v9/10/11 Release]]>
 		</PackageReleaseNotes>
 		
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -31,20 +31,33 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
 		<PackageReference Include="Jumoo.TranslationManager.Core" Version="9.0.1" />
 		<PackageReference Include="Jumoo.TranslationManager.Serializers" Version="9.0.1" />
 		<PackageReference Include="Jumoo.TranslationManager.LinkUpdater" Version="9.0.1" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
-	</ItemGroup>
-
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="10.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.Core" Version="10.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.Serializers" Version="10.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.LinkUpdater" Version="10.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+		<PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="11.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.Core" Version="11.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.Serializers" Version="11.0.0" />
+		<PackageReference Include="Jumoo.TranslationManager.LinkUpdater" Version="11.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
 		<PackageReference Include="UmbracoCms.Web" version="8.4.2" />
+		<PackageReference Include="Jumoo.TranslationManager.Core" Version="9.0.1" />
+		<PackageReference Include="Jumoo.TranslationManager.Serializers" Version="9.0.1" />
+		<PackageReference Include="Jumoo.TranslationManager.LinkUpdater" Version="9.0.1" />
 	</ItemGroup>
 </Project>

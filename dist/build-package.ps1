@@ -11,7 +11,7 @@ $outfolder = ".\$versionString"
 dotnet restore ../TranslationManager.ContentBlocks.sln -v m
 
 "### Pack"; ""
-dotnet pack ..\Jumoo.TranslationManager.ContentBlocks\Jumoo.TranslationManager.ContentBlocks.csproj -c $env -o $outFolder /p:ContinuousIntegrationBuild=true,version=$versionString -v q
+dotnet pack ..\Jumoo.TranslationManager.ContentBlocks\Jumoo.TranslationManager.ContentBlocks.csproj -c $env -o $outFolder -p:ContinuousIntegrationBuild=true -p:version=$versionString -v q
 
 "### To Local Git"; ""
 XCOPY "$outFolder\*.nupkg" "c:\source\localgit" /q /y 
