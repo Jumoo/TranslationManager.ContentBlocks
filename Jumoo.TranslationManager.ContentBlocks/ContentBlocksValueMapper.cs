@@ -7,6 +7,8 @@ using Jumoo.TranslationManager.Core.ValueMappers;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Examine;
+using System.Linq;
 
 #if NETCOREAPP
 using Umbraco.Cms.Core;
@@ -51,14 +53,20 @@ namespace Jumoo.TranslationManager.ContentBlocks
         public TranslationValue GetSourceValue(string displayName, string propertyTypeAlias, object value, CultureInfoView culture)
             => GetSourceValue(displayName, propertyTypeAlias, string.Empty, value, culture);
 
+        private static int[] _supportedVersions = new[] {2,3};
+
         public TranslationValue GetSourceValue(string displayName, string propertyTypeAlias, string path, object value, CultureInfoView culture)
         {
             var jsonValue = GetJson(value);
             if (jsonValue == null) return null;
 
             // we support v2 of the object. 
-            if (!jsonValue.ContainsKey("version") || jsonValue.Value<int>("version") != 2)
+            if (!jsonValue.ContainsKey("version"))
                 return null;
+
+            var version = jsonValue.Value<int>("version");
+
+            if (!_supportedVersions.Contains(version)) return null;
 
             // set up a translation value, as the parent for header & blocks
             var translation = new TranslationValue(displayName, propertyTypeAlias, path);
