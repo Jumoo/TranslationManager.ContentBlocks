@@ -7,18 +7,24 @@ using Jumoo.TranslationManager.Core.ValueMappers;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Examine;
+
 using System.Linq;
+
 
 #if NETCOREAPP
 using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
+
 using Microsoft.Extensions.Logging;
 #else
 using Umbraco.Core;
 using Umbraco.Core.Services;
 using Jumoo.TranslationManager.Logging;
+#endif
+
+#if NET8_0_OR_GREATER
+using Jumoo.TranslationManager.Core.Shared;
 #endif
 
 namespace Jumoo.TranslationManager.ContentBlocks
@@ -35,6 +41,15 @@ namespace Jumoo.TranslationManager.ContentBlocks
     {
         private readonly Lazy<ValueMapperCollection> _valueMappers;
 
+#if NET8_0_OR_GREATER
+        public ContentBlocksValueMapper(
+            IContentService contentService,
+            TranslationDataTypeService dataTypeService,
+            IContentTypeService contentTypeService,
+            ILogger<BaseValueMapper> logger,
+            Lazy<ValueMapperCollection> valueMappers)
+            : base(contentService, dataTypeService, contentTypeService, logger)
+#else
         public ContentBlocksValueMapper(
             IContentService contentService,
             IDataTypeService dataTypeService,
@@ -42,6 +57,7 @@ namespace Jumoo.TranslationManager.ContentBlocks
             ILogger<BaseValueMapper> logger,
             Lazy<ValueMapperCollection> valueMappers)
             : base(contentService, dataTypeService, contentTypeService, logger)
+#endif
         {
             _valueMappers = valueMappers;
         }

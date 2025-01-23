@@ -8,6 +8,7 @@ using Jumoo.TranslationManager.LinkUpdater.LinkMappers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+
 #if NETCOREAPP
 using Umbraco.Cms.Core.Services;
 using Umbraco.Extensions;
@@ -18,6 +19,10 @@ using Umbraco.Core.Models;
 using Umbraco.Core.Services;
 #endif
 
+#if NET8_0_OR_GREATER
+using Jumoo.TranslationManager.Core.Shared;
+#endif
+
 namespace Jumoo.TranslationManager.ContentBlocks
 {
     public class ContentBlocksLinkMapper : LinkMapperNestedBase, ILinkMapper
@@ -25,12 +30,21 @@ namespace Jumoo.TranslationManager.ContentBlocks
         private readonly string docTypeKeyAlias = "ncContentTypeAlias";
         public readonly IContentTypeService contentTypeService;
 
+
+#if NET8_0_OR_GREATER
+        public ContentBlocksLinkMapper(
+            TranslationDataTypeService dataTypeService,
+            Lazy<LinkMapperCollection> linkMappers,
+            LinkResolver linkResolver) : base(dataTypeService, linkMappers, linkResolver)
+        { }
+#else
         public ContentBlocksLinkMapper(
             IDataTypeService dataTypeService,
             Lazy<LinkMapperCollection> linkMappers,
             LinkResolver linkResolver)
             : base(dataTypeService, linkMappers, linkResolver)
         {}
+#endif
 
         public string Name => "ContentBlocks Link Mapper";
 
